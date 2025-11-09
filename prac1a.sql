@@ -1,0 +1,91 @@
+DROP DATABASE IF EXISTS mmcoeLibrary;
+CREATE DATABASE mmcoeLibrary;
+USE mmcoeLibrary;
+
+CREATE TABLE Publisher (
+    PID INT PRIMARY KEY AUTO_INCREMENT,
+    Pub_Name VARCHAR(100) NOT NULL,
+    PCity VARCHAR(50),
+    PEmail VARCHAR(100) UNIQUE
+);
+
+CREATE TABLE Author (
+    AuthorID INT NOT NULL,
+    AName VARCHAR(100) NOT NULL,
+    Aemail VARCHAR(100)
+);
+
+CREATE TABLE Student (
+    PRNNO VARCHAR(20) PRIMARY KEY,
+    SName VARCHAR(100) NOT NULL,
+    RollNo VARCHAR(20),
+    Branch VARCHAR(50),
+    Year INT
+);
+
+CREATE TABLE Book (
+    ISBNNO VARCHAR(20) PRIMARY KEY,
+    Title VARCHAR(255) NOT NULL,
+    Edition VARCHAR(50),
+    Price DECIMAL(10, 2),
+    Quantity INT,
+    PID INT,
+    AID INT,
+    FOREIGN KEY (PID) REFERENCES Publisher(PID)
+);
+
+CREATE TABLE BorrowedBy (
+    TRXID INT PRIMARY KEY AUTO_INCREMENT,
+    IssueDate DATE,
+    RetDate DATE,
+    Fine DECIMAL(8, 2) DEFAULT 0.00,
+    PRN VARCHAR(20),
+    ISBN VARCHAR(20),
+    FOREIGN KEY (PRN) REFERENCES Student(PRNNO)
+);
+
+DESCRIBE Publisher;
+DESCRIBE Author;
+DESCRIBE Student;
+DESCRIBE Book;
+DESCRIBE BorrowedBy;
+
+ALTER TABLE Student ADD COLUMN MobileNo VARCHAR(15);
+ALTER TABLE Student ADD CONSTRAINT UQ_MobileNo UNIQUE (MobileNo);
+
+ALTER TABLE Student ADD COLUMN City VARCHAR(50) DEFAULT 'Pune';
+
+ALTER TABLE Student DROP COLUMN City;
+
+ALTER TABLE Author ADD CONSTRAINT UQ_Aemail UNIQUE (Aemail);
+
+ALTER TABLE Author ADD COLUMN Gender CHAR(1) CHECK (Gender IN ('M', 'F'));
+
+DESCRIBE Student;
+
+ALTER TABLE Author ADD PRIMARY KEY (AuthorID);
+ALTER TABLE Author MODIFY COLUMN AuthorID INT AUTO_INCREMENT;
+
+ALTER TABLE Author MODIFY COLUMN AuthorID INT;
+ALTER TABLE Author DROP PRIMARY KEY;
+
+ALTER TABLE BorrowedBy ADD CONSTRAINT FK_Borrowed_ISBN FOREIGN KEY (ISBN) REFERENCES Book(ISBNNO);
+
+ALTER TABLE BorrowedBy DROP FOREIGN KEY FK_Borrowed_ISBN;
+
+TRUNCATE TABLE Author;
+
+DROP USER IF EXISTS 'user1'@'localhost';
+CREATE USER 'user1'@'localhost' IDENTIFIED BY 'password';
+GRANT SELECT ON mmcoeLibrary.* TO 'user1'@'localhost';
+FLUSH PRIVILEGES;
+
+REVOKE ALL PRIVILEGES, GRANT OPTION FROM 'user1'@'localhost';
+FLUSH PRIVILEGES;
+
+DROP USER IF EXISTS 'user2'@'localhost';
+CREATE USER 'user2'@'localhost' IDENTIFIED BY 'user2password';
+GRANT SELECT, INSERT, UPDATE ON mmcoeLibrary.Book TO 'user2'@'localhost';
+GRANT SELECT, INSERT, UPDATE ON mmcoeLibrary.Author TO 'user2'@'localhost';
+GRANT SELECT, INSERT, UPDATE ON mmcoeLibrary.Publisher TO 'user2'@'localhost';
+FLUSH PRIVILEGES;
