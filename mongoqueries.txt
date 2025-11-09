@@ -1,0 +1,82 @@
+use college
+db.student.insertMany([
+{
+Rno: "TA01",
+Name: "Ravi",
+Branch: "IT",
+Percentage: 75,
+Grade: "First Class with Distinction",
+City: "Pune"
+},
+{
+Rno: "TA02",
+Name: "Anjali",
+Branch: "COMP",
+Percentage: 65,
+Grade: "First Class",
+City: "Mumbai"
+},
+{
+Rno: "TA03",
+Name: "Anil",
+Branch: "AIDS",
+Percentage: 63,
+Grade: "First Class",
+City: "Solapur"
+},
+{
+Rno: "TA04",
+Name: "Rohan",
+Branch: "IT",
+Percentage: 62,
+Grade: "First Class",
+City: "Nagpur"
+},
+{
+Rno: "TA05",
+Name: "Raman",
+Branch: "COMP",
+Percentage: 67,
+Grade: "First Class with Distinction",
+City: "Satara"
+}
+])
+
+db.student.find().pretty()
+
+db.student.find({ Percentage: 67 })
+
+db.student.find({ Rno: "TA02" })
+
+db.student.find({ Branch: "IT", Percentage: 62 })
+
+db.student.find({
+  $or: [{ Branch: "COMP" }, { Percentage: 67 }]
+})
+
+db.student.find({ Percentage: { $gt: 66 } })
+
+
+db.student.find({ Percentage: { $lt: 66 } })
+
+db.student.find().sort({ Percentage: -1 })
+
+db.student.countDocuments()
+
+list banches:
+db.student.distinct("Branch")
+
+db.student.updateOne(
+  { Rno: "TA04" },
+  { $set: { Percentage: 70 } }
+)
+
+12. To delete a field (column) in a collection (table)
+db.student.updateMany({}, { $unset: { City: "" } })
+
+13. Add a field called DOB in collection
+db.student.updateMany({}, { $set: { DOB: "2003-05-15" } })
+
+db.student.deleteOne({ Rno: "TA05" })
+
+db.student.drop()

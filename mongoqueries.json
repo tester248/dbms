@@ -1,0 +1,45 @@
+db.student.insertMany([
+  {
+    Rno: "TA01",
+    Name: "Ravi",
+    Branch: "IT",
+    Percentage: 75,
+    Grade: "First Class with Distinction",
+    City: "Pune"
+  },
+  {
+    Rno: "TA02",
+    Name: "Anjali",
+    Branch: "COMP",
+    Percentage: 65,
+    Grade: "First Class",
+    City: "Mumbai"
+  },
+  {
+    Rno: "TA03",
+    Name: "Anil",
+    Branch: "AIDS",
+    Percentage: 63,
+    Grade: "First Class",
+    City: "Solapur"
+  },
+  {
+    Rno: "TA04",
+    Name: "Rohan",
+    Branch: "IT",
+    Percentage: 62,
+    Grade: "First Class",
+    City: "Nagpur"
+  },
+  {
+    Rno: "TA05",
+    Name: "Raman",
+    Branch: "COMP",
+    Percentage: 67,
+    Grade: "First Class with Distinction",
+    City: "Satara"
+  }
+])
+
+
+
