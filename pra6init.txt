@@ -1,0 +1,8 @@
+--Initialize mysql DB with some values
+CREATE DATABASE IF NOT EXISTS mydb;
+USE mydb;
+CREATE TABLE IF NOT EXISTS designation ( code INT PRIMARY KEY AUTO_INCREMENT, title CHAR(35) NOT NULL UNIQUE );
+INSERT INTO designation (title) VALUES ('Manager'); 
+INSERT INTO designation (title) VALUES ('Developer'); 
+INSERT INTO designation (title) VALUES ('Analyst');
+SELECT * FROM designation;
